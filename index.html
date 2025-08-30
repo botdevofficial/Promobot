@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stand Bot — Boost Your Telegram Presence</title>
+  <meta name="description" content="Stand Bot helps you promote links on Telegram with daily credits, referrals, and optional premium tools for powerful growth." />
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Inline CSS for custom styles and theme -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Style for the glassmorphism effect on the navbar */
+    .glass { 
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+    }
+    .bg-white-80 { background-color: rgba(255, 255, 255, 0.8); }
+    .dark .bg-slate-900-80 { background-color: rgba(15, 23, 42, 0.8); }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors duration-300">
+
+  <!-- Header & Navigation -->
+  <header class="sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 glass bg-white-80 dark:bg-slate-900-80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Site branding -->
+        <div class="flex-shrink-0 mr-4">
+          <a href="#home" class="font-bold text-lg text-slate-900 dark:text-white" aria-label="Stand Bot Home">Stand Bot</a>
+        </div>
+        <!-- Desktop navigation -->
+        <nav class="hidden md:flex md:grow">
+          <ul class="flex grow justify-center flex-wrap items-center gap-x-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+            <li><a href="#features" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a></li>
+            <li><a href="#premium" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Premium</a></li>
+            <li><a href="#how" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">How it works</a></li>
+            <li><a href="#privacy" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy</a></li>
+            <li><a href="#contact" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a></li>
+          </ul>
+        </nav>
+        <!-- Theme Toggle & CTA -->
+        <div class="flex items-center gap-2">
+           <button id="themeToggle" aria-label="Toggle dark/light theme" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <svg id="theme-icon-light" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg id="theme-icon-dark" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-16 pb-20 md:pt-24 md:pb-28">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">Boost your Telegram with <span class="text-indigo-600 dark:text-indigo-400">Stand Bot</span></h1>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300">Auto-promote your link to real users, earn extra credits via referrals, and optionally unlock premium tools.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a id="ctaStart" href="https://t.me/anoni67_bot?start=start" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105" aria-label="Start Stand Bot">
+            🚀 Start Bot
+          </a>
+          <a id="ctaGroup" href="https://t.me/anoni67_bot?startgroup=addme" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-800 text-white font-semibold shadow-md hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-transform transform hover:scale-105" aria-label="Add Stand Bot to a group">
+            ➕ Add to Group
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-950/50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Everything You Need to Grow</h2>
+          <p class="mt-3 max-w-2xl mx-auto text-md text-slate-600 dark:text-slate-400">Core features are free forever. Upgrade only when you need more power.</p>
+        </div>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
+            <h3 class="font-semibold text-lg">📢 Auto Promotion</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Each promotion sends your link to <b class="text-slate-800 dark:text-white">15 unique users</b>.</p>
+          </div>
+          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
+            <h3 class="font-semibold text-lg">⏳ Daily Credits</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">You get <b class="text-slate-800 dark:text-white">4 free promotions</b> every single day.</p>
+          </div>
+          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
+            <h3 class="font-semibold text-lg">🤝 Referral Rewards</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Every <b class="text-slate-800 dark:text-white">3 referrals</b> earn you <b class="text-slate-800 dark:text-white">+4 bonus</b> promotions.</p>
+          </div>
+          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
+            <h3 class="font-semibold text-lg">📊 My Link & Status</h3>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Save your link once and check your credits or status anytime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section id="premium" class="py-16 sm:py-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">⭐ Go Premium</h2>
+          <p class="mt-3 max-w-2xl mx-auto text-md text-slate-600 dark:text-slate-400">Unlock powerful tools for maximum reach. The perks are:</p>
+          <ul class="mt-4 inline-flex flex-col sm:flex-row gap-x-6 gap-y-2 text-slate-700 dark:text-slate-200">
+             <li>✔️ <b>/picbroad</b> → send image + caption to <b>250 users/day</b></li>
+             <li>✔️ <b>10× ChatPromo/day</b></li>
+          </ul>
+        </div>
+        <div class="mt-12 grid sm:grid-cols-3 gap-8">
+          <!-- Pricing Plans -->
+          <div class="p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
+            <h3 class="font-semibold text-lg">1 Week</h3>
+            <p class="mt-2 text-4xl font-extrabold">₹30</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">15⭐</p>
+          </div>
+          <div class="p-6 rounded-2xl shadow-2xl border-2 border-indigo-600 dark:border-indigo-500 bg-white dark:bg-slate-800 text-center relative">
+             <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-semibold tracking-wider text-white uppercase bg-indigo-600 rounded-full">Most Popular</div>
+            <h3 class="font-semibold text-lg">3 Weeks</h3>
+            <p class="mt-2 text-4xl font-extrabold">₹75</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">38⭐</p>
+          </div>
+          <div class="p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
+            <h3 class="font-semibold text-lg">1 Month</h3>
+            <p class="mt-2 text-4xl font-extrabold">₹89</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">45⭐</p>
+          </div>
+        </div>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a id="ctaUpgrade" href="https://t.me/anoni67_bot?start=premium" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+              ⭐ Upgrade in Bot
+            </a>
+            <a href="https://t.me/chosentwo_bot" class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+              💬 Pay / Support
+            </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how" class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-950/50">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl">🛠️ How It Works</h2>
+            <ol class="mt-8 space-y-4 list-decimal list-inside text-slate-600 dark:text-slate-300 marker:text-indigo-600 marker:font-bold">
+                <li>Start the bot and submit your promotion link (with optional text).</li>
+                <li>Use the <code>/promote</code> command or menu buttons to send your link to other users.</li>
+                <li>Share your unique referral link to earn bonus promotions: <b>3 referrals = +4 promotions</b>.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Privacy & Caution -->
+    <section id="privacy" class="py-16 sm:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl">Our Promise & Your Responsibility</h2>
+            <div class="mt-8 grid md:grid-cols-2 gap-8">
+                <div class="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800">
+                    <h3 class="font-semibold text-lg text-emerald-800 dark:text-emerald-300">🔒 Privacy First</h3>
+                    <p class="mt-1 text-sm text-emerald-700 dark:text-emerald-400">We only store your Telegram ID and link data required to deliver promotions. Your data is never sold or shared with third parties. Period.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800">
+                    <h3 class="font-semibold text-lg text-amber-800 dark:text-amber-300">⚠️ A Word of Caution</h3>
+                    <p class="mt-1 text-sm text-amber-700 dark:text-amber-400">Growth and engagement are not guaranteed. Our bot connects you with real users, but results depend on the quality of your content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-slate-100 dark:bg-slate-950/50 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div id="contact" class="flex flex-col items-center justify-center gap-6">
+             <h3 class="font-bold text-xl">Get in Touch</h3>
+             <p class="text-center text-slate-600 dark:text-slate-400">For questions, payment support, or custom bot inquiries.</p>
+             <div class="flex flex-wrap gap-4">
+                <a href="https://t.me/chosentwo_bot" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-semibold shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact Admin</a>
+                <a href="https://t.me/Testovila_bot" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Track Links via @Testovila_bot</a>
+             </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400">
+            <p>&copy; 2025 Stand Bot. All rights reserved.</p>
+            <a id="ctaShare" href="#" class="mt-2 sm:mt-0 hover:text-indigo-600 dark:hover:text-indigo-400">🔗 Share this Site</a>
+        </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Constants for Telemetry ---
+    const JSONBIN_ID = 'YOUR_JSONBIN_ID'; // IMPORTANT: Replace with your actual Bin ID
+    const JSONBIN_API_KEY = 'YOUR_JSONBIN_API_KEY'; // IMPORTANT: Replace with your actual Master Key
+    const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
+
+    // --- Theme Toggle Logic ---
+    (function() {
+        const themeToggle = document.getElementById('themeToggle');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        
+        // Determine and set initial theme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        let isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+
+        function applyTheme(dark) {
+            if (dark) {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        }
+
+        applyTheme(isDark);
+
+        // Add click listener
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme(isDark);
+        });
+    })();
+
+    // --- Share Button Logic ---
+    (function() {
+        const shareButton = document.getElementById('ctaShare');
+        if (shareButton) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Try Stand Bot to boost your Telegram presence!');
+            shareButton.href = `https://t.me/share?url=${url}&text=${text}`;
+        }
+    })();
+
+    // --- Minimal Telemetry Logger for JSONBin.io ---
+    (async function() {
+        /**
+         * Logs an event to a JSONBin.io bin.
+         * @param {string} eventName - The name of the event (e.g., 'visit', 'click_start').
+         */
+        async function logEvent(eventName) {
+            // Do not log if placeholders are not replaced
+            if (JSONBIN_ID === 'YOUR_JSONBIN_ID' || JSONBIN_API_KEY === 'YOUR_JSONBIN_API_KEY') {
+                console.warn('JSONBin ID/API Key not configured. Logging is disabled.');
+                return;
+            }
+
+            const payload = {
+                ts: new Date().toISOString(),
+                event: eventName,
+                ua: navigator.userAgent,
+                ref: document.referrer || null,
+            };
+
+            try {
+                // 1. Fetch the latest version of the bin to get current data.
+                const getResponse = await fetch(`${JSONBIN_URL}/latest`, {
+                    headers: { 'X-Master-Key': JSONBIN_API_KEY }
+                });
+
+                let currentData = { events: [] };
+                if (getResponse.ok) {
+                    const latestRecord = await getResponse.json();
+                    // Ensure the record and events array exist
+                    if (latestRecord.record && Array.isArray(latestRecord.record.events)) {
+                        currentData = latestRecord.record;
+                    }
+                } else if (getResponse.status !== 404) {
+                    // Log error if it's not a 'Not Found' error
+                    console.warn(`JSONBin: Failed to GET latest bin. Status: ${getResponse.status}`);
+                    // Fallback to creating a new bin if something goes wrong
+                }
+                
+                // 2. Append new event.
+                currentData.events.push(payload);
+
+                // 3. PUT the updated data back.
+                const putResponse = await fetch(JSONBIN_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_API_KEY,
+                    },
+                    body: JSON.stringify(currentData),
+                });
+
+                if (!putResponse.ok) {
+                    // If PUT fails, maybe the bin was deleted. Try POSTing to create it.
+                    console.warn('JSONBin PUT failed, trying to POST a new bin.');
+                    const postResponse = await fetch('https://api.jsonbin.io/v3/b', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': JSONBIN_API_KEY,
+                            'X-Bin-Name': 'standbot-analytics',
+                            'X-Collection-Id': 'YOUR_COLLECTION_ID' // Optional: Organize bins
+                        },
+                        body: JSON.stringify({ events: [payload] }),
+                    });
+                     if (!postResponse.ok) {
+                        console.error('JSONBin: Failed to create new bin after PUT failure.');
+                    }
+                }
+            } catch (error) {
+                console.warn('JSONBin logging failed:', error);
+            }
+        }
+
+        // --- Attach Event Listeners ---
+        // Log page visit on load
+        logEvent('visit');
+
+        // Log clicks on primary CTAs
+        document.getElementById('ctaStart')?.addEventListener('click', () => logEvent('click_start'));
+        document.getElementById('ctaGroup')?.addEventListener('click', () => logEvent('click_add_group'));
+        document.getElementById('ctaUpgrade')?.addEventListener('click', () => logEvent('click_upgrade'));
+        document.getElementById('ctaShare')?.addEventListener('click', () => logEvent('click_share'));
+    })();
+  </script>
+</body>
+</html>
