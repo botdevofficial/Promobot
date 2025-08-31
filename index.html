@@ -36,6 +36,11 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #555; }
+        
+        /* Styles for the mobile menu */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
@@ -45,20 +50,50 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <button id="home-view-btn" class="font-bold text-xl text-slate-900 dark:text-white">Promoter Bot</button>
+                
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
                     <button id="tracker-view-btn" class="flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                         🔗 Link Tracker
                     </button>
-                    <!-- Stand Bot specific nav links -->
                     <a href="#features" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Features</a>
                     <a href="#premium" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Premium</a>
                     <a href="#contact" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
                 </nav>
+
                 <div class="flex items-center gap-2">
                      <span id="user-display" class="hidden text-sm font-medium text-slate-600 dark:text-slate-400"></span>
                      <button id="logout-button" class="hidden text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400">Logout</button>
                     <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700"></button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="p-2 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden">
+            <div class="fixed top-0 right-0 h-full w-64 bg-white dark:bg-slate-800 shadow-lg p-5 transform translate-x-full">
+                <div class="flex justify-end mb-4">
+                    <button id="close-mobile-menu" class="p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="flex flex-col space-y-4 text-lg">
+                    <button id="mobile-tracker-view-btn" class="text-left">🔗 Link Tracker</button>
+                    <a href="#features" class="mobile-stand-bot-nav">Features</a>
+                    <a href="#premium" class="mobile-stand-bot-nav">Premium</a>
+                    <a href="#contact" class="mobile-stand-bot-nav">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
@@ -177,12 +212,14 @@
             };
             const navElements = {
                 standBot: document.querySelectorAll('.stand-bot-nav'),
+                mobileStandBot: document.querySelectorAll('.mobile-stand-bot-nav'),
                 userDisplay: document.getElementById('user-display'),
                 logoutButton: document.getElementById('logout-button'),
             };
             const viewButtons = {
                 home: document.getElementById('home-view-btn'),
                 tracker: document.getElementById('tracker-view-btn'),
+                mobileTracker: document.getElementById('mobile-tracker-view-btn'),
                 trackerCard: document.getElementById('tracker-feature-card'),
             };
             const loginElements = {
@@ -197,6 +234,12 @@
                 originalLinkInput: document.getElementById('original-link'),
                 newLinkDisplay: document.getElementById('new-link-display'),
                 newShortLinkInput: document.getElementById('new-short-link'),
+            };
+             const mobileMenu = {
+                menu: document.getElementById('mobile-menu'),
+                panel: document.querySelector('#mobile-menu > div'),
+                openBtn: document.getElementById('mobile-menu-button'),
+                closeBtn: document.getElementById('close-mobile-menu'),
             };
             const spinner = document.getElementById('loading-spinner');
             let clicksChart = null;
@@ -215,6 +258,20 @@
                 themeToggle.innerHTML = isDarkNow ? sunIcon : moonIcon;
             });
 
+            // --- MOBILE MENU ---
+            function openMenu() {
+                mobileMenu.menu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.panel.classList.remove('translate-x-full'), 10);
+            }
+            function closeMenu() {
+                mobileMenu.panel.classList.add('translate-x-full');
+                setTimeout(() => mobileMenu.menu.classList.add('hidden'), 300);
+            }
+            mobileMenu.openBtn.addEventListener('click', openMenu);
+            mobileMenu.closeBtn.addEventListener('click', closeMenu);
+            mobileMenu.menu.addEventListener('click', (e) => { if (e.target === mobileMenu.menu) closeMenu(); });
+
+
             // --- VIEW MANAGEMENT ---
             function switchView(viewName) {
                 Object.values(views).forEach(v => v.classList.add('hidden'));
@@ -223,8 +280,10 @@
                 
                 const isTracker = viewName === 'linkTracker';
                 navElements.standBot.forEach(el => el.style.display = isTracker ? 'none' : 'block');
+                navElements.mobileStandBot.forEach(el => el.style.display = isTracker ? 'none' : 'block');
                 navElements.userDisplay.classList.toggle('hidden', !isTracker || !currentUserId);
                 navElements.logoutButton.classList.toggle('hidden', !isTracker || !currentUserId);
+                closeMenu();
             }
 
             // --- API HELPERS ---
@@ -351,6 +410,7 @@
             // --- EVENT LISTENERS ---
             viewButtons.home.addEventListener('click', () => switchView('standBot'));
             viewButtons.tracker.addEventListener('click', () => switchView('linkTracker'));
+            viewButtons.mobileTracker.addEventListener('click', () => switchView('linkTracker'));
             viewButtons.trackerCard.addEventListener('click', () => switchView('linkTracker'));
             loginElements.button.addEventListener('click', () => {
                 const userId = loginElements.userIdInput.value.trim();
@@ -375,3 +435,4 @@
     </script>
 </body>
 </html>
+
