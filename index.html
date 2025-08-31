@@ -108,8 +108,9 @@
                     <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-700 dark:text-slate-300">Auto-promote your link, earn referral credits, and unlock premium tools to grow your audience.</p>
                     <div class="mt-8 flex flex-wrap justify-center gap-4">
                         <a id="ctaStart" href="https://t.me/anoni67_bot?start=start" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition">🚀 Promoter Bot</a>
-                        <a id="ctaStart" href="https://t.me/chosentwo_bot?start=clone" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition">🤖Get my clone</a>
+                        <a href="https://t.me/chosentwo_bot?start=clone" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition">🤖 Get my clone</a>
                         <a id="ctaGroup" href="https://t.me/anoni67_bot?startgroup=addme" class="px-6 py-3 rounded-xl bg-slate-800 text-white dark:bg-slate-700 hover:bg-black dark:hover:bg-slate-600 transition">➕ Add to Group</a>
+                        <button id="ctaTrackLink" class="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition">🔗 Track a Link</button>
                     </div>
                 </div>
             </section>
@@ -221,6 +222,7 @@
                 tracker: document.getElementById('tracker-view-btn'),
                 mobileTracker: document.getElementById('mobile-tracker-view-btn'),
                 trackerCard: document.getElementById('tracker-feature-card'),
+                ctaTrackLink: document.getElementById('ctaTrackLink'), // New button
             };
             const loginElements = {
                 section: document.getElementById('login-section'),
@@ -412,6 +414,7 @@
             viewButtons.tracker.addEventListener('click', () => switchView('linkTracker'));
             viewButtons.mobileTracker.addEventListener('click', () => switchView('linkTracker'));
             viewButtons.trackerCard.addEventListener('click', () => switchView('linkTracker'));
+            viewButtons.ctaTrackLink.addEventListener('click', () => switchView('linkTracker')); // New listener
             loginElements.button.addEventListener('click', () => {
                 const userId = loginElements.userIdInput.value.trim();
                 if (userId) login(userId);
