@@ -1,340 +1,375 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Stand Bot — Boost Your Telegram Presence</title>
-  <meta name="description" content="Stand Bot helps you promote links on Telegram with daily credits, referrals, and optional premium tools for powerful growth." />
-  
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stand Bot & Link Tracker</title>
+    
+    <!-- Tailwind CSS, Google Fonts, and Chart.js -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display-swap" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Inline CSS for custom styles and theme -->
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    /* Style for the glassmorphism effect on the navbar */
-    .glass { 
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-    }
-    .bg-white-80 { background-color: rgba(255, 255, 255, 0.8); }
-    .dark .bg-slate-900-80 { background-color: rgba(15, 23, 42, 0.8); }
-  </style>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-nav { 
+            backdrop-filter: blur(12px) saturate(180%); 
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+        .dark .glass-nav {
+             background-color: rgba(15, 23, 42, 0.75);
+        }
+        .view {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .view.hidden {
+            opacity: 0;
+            transform: scale(0.98);
+            pointer-events: none;
+            position: absolute;
+        }
+        .table-container { overflow-x: auto; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #555; }
+    </style>
 </head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-<body class="bg-gray-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors duration-300">
-
-  <!-- Header & Navigation -->
-  <header class="sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-700/50 glass bg-white-80 dark:bg-slate-900-80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Site branding -->
-        <div class="flex-shrink-0 mr-4">
-          <a href="#home" class="font-bold text-lg text-slate-900 dark:text-white" aria-label="Stand Bot Home">Promoter Bot</a>
-        </div>
-        <!-- Desktop navigation -->
-        <nav class="hidden md:flex md:grow">
-          <ul class="flex grow justify-center flex-wrap items-center gap-x-6 text-sm font-medium text-slate-600 dark:text-slate-300">
-            <li><a href="#features" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a></li>
-            <li><a href="#premium" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Premium</a></li>
-            <li><a href="#how" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">How it works</a></li>
-            <li><a href="#privacy" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy</a></li>
-            <li><a href="#contact" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</a></li>
-          </ul>
-        </nav>
-        <!-- Theme Toggle & CTA -->
-        <div class="flex items-center gap-2">
-           <button id="themeToggle" aria-label="Toggle dark/light theme" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <svg id="theme-icon-light" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            <svg id="theme-icon-dark" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-16 pb-20 md:pt-24 md:pb-28">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white">Boost your Telegram with <span class="text-indigo-600 dark:text-indigo-400">Promoter Bot</span></h1>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-300">Auto-promote your link to real users, earn extra credits via referrals, and optionally unlock premium tools.</p>
-        <div class="mt-8 flex flex-wrap justify-center gap-4">
-          <a id="ctaStart" href="https://t.me/anoni67_bot?start=start" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105" aria-label="Start Stand Bot">
-            🚀 Start Bot
-          </a>
-         <a id="ctaStart" href="https://t.me/chosentwo_bot?start=clone" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105" aria-label="Start Stand Bot">
-            🤖Get clone bot
-         </a> 
-          <a id="ctaGroup" href="https://t.me/anoni67_bot?startgroup=addme" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-800 text-white font-semibold shadow-md hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-transform transform hover:scale-105" aria-label="Add Stand Bot to a group">
-            ➕ Add to Group
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-950/50">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Everything You Need to Grow</h2>
-          <p class="mt-3 max-w-2xl mx-auto text-md text-slate-600 dark:text-slate-400">Core features are free forever. Upgrade only when you need more power.</p>
-        </div>
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
-            <h3 class="font-semibold text-lg">📢 Auto Promotion (/promote)</h3>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Each promotion sends your link to <b class="text-slate-800 dark:text-white">15 unique users</b>.</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
-            <h3 class="font-semibold text-lg">📢 Auto Promotion to Groups</h3>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">/chatpromo .Each promotion sends your link to <b class="text-slate-800 dark:text-white">multiple Super Groups</b>.</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
-            <h3 class="font-semibold text-lg">⏳ Daily Credits</h3>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">You get <b class="text-slate-800 dark:text-white">4 free promotions</b> every single day.</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
-            <h3 class="font-semibold text-lg">🤝 Referral Rewards</h3>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Every <b class="text-slate-800 dark:text-white">3 referrals</b> earn you <b class="text-slate-800 dark:text-white">+4 bonus</b> promotions.</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800">
-            <h3 class="font-semibold text-lg">📊 My Link & Status</h3>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Save your link once and check your credits or status anytime.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Premium Section -->
-    <section id="premium" class="py-16 sm:py-24">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">⭐ Go Premium</h2>
-          <p class="mt-3 max-w-2xl mx-auto text-md text-slate-600 dark:text-slate-400">Unlock powerful tools for maximum reach. The perks are:</p>
-          <ul class="mt-4 inline-flex flex-col sm:flex-row gap-x-6 gap-y-2 text-slate-700 dark:text-slate-200">
-             <li>✔️ <b>/picbroad</b> → send image + caption to <b>250 users/day</b></li>
-             <li>✔️ <b>10× ChatPromo/day</b></li>
-          </ul>
-        </div>
-        <div class="mt-12 grid sm:grid-cols-3 gap-8">
-          <!-- Pricing Plans -->
-          <div class="p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
-            <h3 class="font-semibold text-lg">1 Week</h3>
-            <p class="mt-2 text-4xl font-extrabold">₹30</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400">15⭐</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-2xl border-2 border-indigo-600 dark:border-indigo-500 bg-white dark:bg-slate-800 text-center relative">
-             <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-semibold tracking-wider text-white uppercase bg-indigo-600 rounded-full">Most Popular</div>
-            <h3 class="font-semibold text-lg">3 Weeks</h3>
-            <p class="mt-2 text-4xl font-extrabold">₹75</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400">38⭐</p>
-          </div>
-          <div class="p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
-            <h3 class="font-semibold text-lg">1 Month</h3>
-            <p class="mt-2 text-4xl font-extrabold">₹89</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400">45⭐</p>
-          </div>
-        </div>
-        <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a id="ctaUpgrade" href="https://t.me/anoni67_bot?start=premium" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
-              ⭐ Upgrade in Bot
-            </a>
-            <a href="https://t.me/chosentwo_bot" class="inline-flex items-center justify-center px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
-              💬 Pay / Support
-            </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how" class="py-16 sm:py-24 bg-slate-100 dark:bg-slate-950/50">
-        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl">🛠️ How It Works</h2>
-            <ol class="mt-8 space-y-4 list-decimal list-inside text-slate-600 dark:text-slate-300 marker:text-indigo-600 marker:font-bold">
-                <li>Start the bot and submit your promotion link (with optional text).</li>
-                <li>Use the <code>/promote</code> command or menu buttons to send your link to other users.</li>
-                <li>Share your unique referral link to earn bonus promotions: <b>3 referrals = +4 promotions</b>.</li>
-            </ol>
-        </div>
-    </section>
-
-    <!-- Privacy & Caution -->
-    <section id="privacy" class="py-16 sm:py-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-3xl font-bold tracking-tight sm:text-4xl">Our Promise & Your Responsibility</h2>
-            <div class="mt-8 grid md:grid-cols-2 gap-8">
-                <div class="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800">
-                    <h3 class="font-semibold text-lg text-emerald-800 dark:text-emerald-300">🔒 Privacy First</h3>
-                    <p class="mt-1 text-sm text-emerald-700 dark:text-emerald-400">We only store your Telegram ID and link data required to deliver promotions. Your data is never sold or shared with third parties. Period.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800">
-                    <h3 class="font-semibold text-lg text-amber-800 dark:text-amber-300">⚠️ A Word of Caution</h3>
-                    <p class="mt-1 text-sm text-amber-700 dark:text-amber-400">Growth and engagement are not guaranteed. Our bot connects you with real users, but results depend on the quality of your content.</p>
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 glass-nav border-b border-slate-200/80 dark:border-slate-700/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <button id="home-view-btn" class="font-bold text-xl text-slate-900 dark:text-white">Stand Bot</button>
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <button id="tracker-view-btn" class="flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                        🔗 Link Tracker
+                    </button>
+                    <!-- Stand Bot specific nav links -->
+                    <a href="#features" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Features</a>
+                    <a href="#premium" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Premium</a>
+                    <a href="#contact" class="stand-bot-nav hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
+                </nav>
+                <div class="flex items-center gap-2">
+                     <span id="user-display" class="hidden text-sm font-medium text-slate-600 dark:text-slate-400"></span>
+                     <button id="logout-button" class="hidden text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400">Logout</button>
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700"></button>
                 </div>
             </div>
         </div>
-    </section>
-  </main>
-  
-  <!-- Footer -->
-  <footer class="bg-slate-100 dark:bg-slate-950/50 border-t border-slate-200 dark:border-slate-800">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div id="contact" class="flex flex-col items-center justify-center gap-6">
-             <h3 class="font-bold text-xl">Get in Touch</h3>
-             <p class="text-center text-slate-600 dark:text-slate-400">For questions, payment support, or custom bot inquiries.</p>
-             <div class="flex flex-wrap gap-4">
-                <a href="https://t.me/chosentwo_bot" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-semibold shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Contact Admin</a>
-                <a href="https://t.me/Testovila_bot" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">Track Links via @Testovila_bot</a>
-             </div>
+    </header>
+
+    <main class="relative">
+        <!-- Stand Bot View -->
+        <div id="stand-bot-view" class="view">
+             <!-- Hero -->
+            <section id="home" class="py-14 sm:py-20 px-4">
+                <div class="max-w-6xl mx-auto text-center">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight text-slate-900 dark:text-white">Boost your Telegram with <span class="text-indigo-600">Stand Bot</span></h1>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-700 dark:text-slate-300">Auto-promote your link, earn referral credits, and unlock premium tools to grow your audience.</p>
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <a id="ctaStart" href="https://t.me/anoni67_bot?start=start" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition">🚀 Start Bot</a>
+                        <a id="ctaGroup" href="https://t.me/anoni67_bot?startgroup=addme" class="px-6 py-3 rounded-xl bg-slate-800 text-white dark:bg-slate-700 hover:bg-black dark:hover:bg-slate-600 transition">➕ Add to Group</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section id="features" class="py-14 sm:py-20 bg-slate-100 dark:bg-slate-950/50 px-4">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">Powerful Features</h2>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-lg"><h3 class="font-semibold mb-1">📢 Auto Promotion</h3><p class="text-sm text-slate-600 dark:text-slate-400">Reach <b>15</b> unique users per promotion.</p></div>
+                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-lg"><h3 class="font-semibold mb-1">⏳ Daily Credits</h3><p class="text-sm text-slate-600 dark:text-slate-400"><b>4</b> free promotions every day.</p></div>
+                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-lg"><h3 class="font-semibold mb-1">👥 Referral Rewards</h3><p class="text-sm text-slate-600 dark:text-slate-400">3 referrals = <b>+4</b> extra promotions.</p></div>
+                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-lg cursor-pointer hover:ring-2 ring-indigo-500 transition" id="tracker-feature-card"><h3 class="font-semibold mb-1">🔗 Free Link Tracker</h3><p class="text-sm text-slate-600 dark:text-slate-400">Shorten & track clicks on your links. Click to try!</p></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Premium -->
+            <section id="premium" class="py-14 sm:py-20 px-4">
+                 <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">⭐ Go Premium</h2>
+                    <p class="text-slate-600 dark:text-slate-400 mb-8">Unlock <b>/picbroad</b> to message 250 users/day & get <b>10x ChatPromo</b> daily.</p>
+                     <div class="grid sm:grid-cols-3 gap-6 text-left">
+                        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800"><h3 class="font-semibold text-lg">1 Week</h3><div class="text-3xl font-extrabold mt-2">₹30 <span class="text-sm opacity-80">/ 15⭐</span></div></div>
+                        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800 border-2 border-indigo-500"><h3 class="font-semibold text-lg">3 Weeks</h3><div class="text-3xl font-extrabold mt-2">₹75 <span class="text-sm opacity-80">/ 38⭐</span></div></div>
+                        <div class="p-6 rounded-2xl shadow-lg bg-white dark:bg-slate-800"><h3 class="font-semibold text-lg">1 Month</h3><div class="text-3xl font-extrabold mt-2">₹89 <span class="text-sm opacity-80">/ 45⭐</span></div></div>
+                    </div>
+                    <a id="ctaPremium" href="https://t.me/chosentwo_bot" class="inline-block mt-8 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition">💬 Pay / Support</a>
+                </div>
+            </section>
+
+            <!-- Contact -->
+             <section id="contact" class="py-14 sm:py-20 bg-slate-100 dark:bg-slate-950/50 px-4">
+                <div class="max-w-6xl mx-auto text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">📞 Support</h2>
+                    <p class="text-slate-700 dark:text-slate-300 mb-6">Questions or custom bot inquiries?</p>
+                    <a href="https://t.me/chosentwo_bot" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg hover:bg-indigo-700 transition">Contact Admin</a>
+                </div>
+            </section>
         </div>
-        <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400">
-            <p>&copy; 2025 Promoter Bot. All rights reserved.</p>
-            <a id="ctaShare" href="#" class="mt-2 sm:mt-0 hover:text-indigo-600 dark:hover:text-indigo-400">🔗 Share this Site</a>
+
+        <!-- Link Tracker View -->
+        <div id="link-tracker-view" class="view hidden">
+            <!-- Login Section -->
+            <section id="login-section" class="max-w-md mx-auto py-12">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-2xl font-bold text-center">Link Tracker Login</h2>
+                    <p class="text-center mt-2 text-sm text-slate-600 dark:text-slate-400">Enter your User ID to manage your links.</p>
+                    <div class="mt-6 space-y-4">
+                        <input type="text" id="user-id" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md" placeholder="e.g., 7097744702">
+                        <button id="login-button" class="w-full py-3 px-4 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700">Login</button>
+                    </div>
+                    <div id="login-error" class="mt-4 text-center text-sm text-red-500"></div>
+                </div>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="hidden max-w-7xl mx-auto py-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg"><h3 class="text-sm font-medium">Total Links</h3><p id="total-links" class="mt-1 text-3xl font-semibold">0</p></div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg"><h3 class="text-sm font-medium">Total Clicks</h3><p id="total-clicks" class="mt-1 text-3xl font-semibold">0</p></div>
+                </div>
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1"><div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg"><h3 class="text-lg font-semibold mb-4">Create new link</h3><input type="url" id="original-link" class="mt-1 block w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border rounded-md" placeholder="https://example.com"><button id="create-link-button" class="w-full mt-4 py-3 px-4 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700">Generate</button><div id="new-link-display" class="mt-4 hidden p-3 bg-indigo-50 dark:bg-slate-700 rounded-md"><input type="text" id="new-short-link" class="w-full bg-transparent font-mono text-sm" readonly></div></div></div>
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg"><h3 class="font-semibold mb-2">Top 5 Links by Clicks</h3><canvas id="clicks-chart"></canvas></div>
+                </div>
+                <div class="mt-8 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+                     <h3 class="font-semibold mb-4">Your Links</h3>
+                     <div class="table-container">
+                        <table class="min-w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="px-6 py-3 text-left text-xs font-medium uppercase">Short Link</th><th class="px-6 py-3 text-left text-xs font-medium uppercase">Original</th><th class="px-6 py-3 text-left text-xs font-medium uppercase">Clicks</th><th class="px-6 py-3 text-left text-xs font-medium uppercase">Created</th></tr></thead><tbody id="links-table-body"></tbody></table>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
-  </footer>
+        <div id="loading-spinner" class="hidden fixed inset-0 bg-black/20 z-50 flex items-center justify-center"><div class="w-12 h-12 border-4 border-white border-t-indigo-500 rounded-full animate-spin"></div></div>
+    </main>
+    
+    <footer class="bg-slate-900/95 text-slate-400 py-8 text-center mt-12">
+        <p>&copy; 2025 Stand Bot & Link Tracker. All rights reserved.</p>
+    </footer>
 
-  <script>
-    // --- Constants for Telemetry ---
-    const JSONBIN_ID = '68b4029243b1c97be931d983'; // IMPORTANT: Replace with your actual Bin ID
-    const JSONBIN_API_KEY = '$2a$10$OWB0wBTxocZeAjW4yY5pyOQwnVSUr5a3bovRM9LZM5NJI8zpiT3eS'; // IMPORTANT: Replace with your actual Master Key
-    const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
-
-    // --- Theme Toggle Logic ---
-    (function() {
-        const themeToggle = document.getElementById('themeToggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-        
-        // Determine and set initial theme
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        let isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-
-        function applyTheme(dark) {
-            if (dark) {
-                document.documentElement.classList.add('dark');
-                lightIcon.classList.add('hidden');
-                darkIcon.classList.remove('hidden');
-            } else {
-                document.documentElement.classList.remove('dark');
-                darkIcon.classList.add('hidden');
-                lightIcon.classList.remove('hidden');
-            }
-        }
-
-        applyTheme(isDark);
-
-        // Add click listener
-        themeToggle.addEventListener('click', () => {
-            isDark = !isDark;
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            applyTheme(isDark);
-        });
-    })();
-
-    // --- Share Button Logic ---
-    (function() {
-        const shareButton = document.getElementById('ctaShare');
-        if (shareButton) {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent('Try Stand Bot to boost your Telegram presence!');
-            shareButton.href = `https://t.me/share?url=${url}&text=${text}`;
-        }
-    })();
-
-    // --- Minimal Telemetry Logger for JSONBin.io ---
-    (async function() {
-        /**
-         * Logs an event to a JSONBin.io bin.
-         * @param {string} eventName - The name of the event (e.g., 'visit', 'click_start').
-         */
-        async function logEvent(eventName) {
-            // Do not log if placeholders are not replaced
-            if (JSONBIN_ID === 'YOUR_JSONBIN_ID' || JSONBIN_API_KEY === 'YOUR_JSONBIN_API_KEY') {
-                console.warn('JSONBin ID/API Key not configured. Logging is disabled.');
-                return;
-            }
-
-            const payload = {
-                ts: new Date().toISOString(),
-                event: eventName,
-                ua: navigator.userAgent,
-                ref: document.referrer || null,
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIG ---
+            const STAND_BOT_CONFIG = {
+                BIN_ID: '68b4029243b1c97be931d983', // IMPORTANT: Replace with Stand Bot analytics Bin ID
+                API_KEY: '$2a$10$OWB0wBTxocZeAjW4yY5pyOQwnVSUr5a3bovRM9LZM5NJI8zpiT3eS',   // IMPORTANT: Replace with Stand Bot Master Key
+            };
+            const LINK_TRACKER_CONFIG = {
+                API_KEY: "$2a$10$KXx5Yb2HF6z292WnEjQcY.P/WggIJ9sbwMXyhT9UmzFPtlyavGGlK",
+                BIN_ID: "6877dbaf3052b733d10d94bc",
+                DOMAIN: "https://botdevofficial.github.io/404_check/",
             };
 
-            try {
-                // 1. Fetch the latest version of the bin to get current data.
-                const getResponse = await fetch(`${JSONBIN_URL}/latest`, {
-                    headers: { 'X-Master-Key': JSONBIN_API_KEY }
-                });
+            // --- UI ELEMENTS ---
+            const views = {
+                standBot: document.getElementById('stand-bot-view'),
+                linkTracker: document.getElementById('link-tracker-view'),
+            };
+            const navElements = {
+                standBot: document.querySelectorAll('.stand-bot-nav'),
+                userDisplay: document.getElementById('user-display'),
+                logoutButton: document.getElementById('logout-button'),
+            };
+            const viewButtons = {
+                home: document.getElementById('home-view-btn'),
+                tracker: document.getElementById('tracker-view-btn'),
+                trackerCard: document.getElementById('tracker-feature-card'),
+            };
+            const loginElements = {
+                section: document.getElementById('login-section'),
+                button: document.getElementById('login-button'),
+                userIdInput: document.getElementById('user-id'),
+                error: document.getElementById('login-error'),
+            };
+            const dashboardElements = {
+                section: document.getElementById('dashboard-section'),
+                createButton: document.getElementById('create-link-button'),
+                originalLinkInput: document.getElementById('original-link'),
+                newLinkDisplay: document.getElementById('new-link-display'),
+                newShortLinkInput: document.getElementById('new-short-link'),
+            };
+            const spinner = document.getElementById('loading-spinner');
+            let clicksChart = null;
+            let currentUserId = null;
 
-                let currentData = { events: [] };
-                if (getResponse.ok) {
-                    const latestRecord = await getResponse.json();
-                    // Ensure the record and events array exist
-                    if (latestRecord.record && Array.isArray(latestRecord.record.events)) {
-                        currentData = latestRecord.record;
-                    }
-                } else if (getResponse.status !== 404) {
-                    // Log error if it's not a 'Not Found' error
-                    console.warn(`JSONBin: Failed to GET latest bin. Status: ${getResponse.status}`);
-                    // Fallback to creating a new bin if something goes wrong
-                }
+            // --- THEME ---
+            const themeToggle = document.getElementById('themeToggle');
+            const sunIcon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`;
+            const moonIcon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>`;
+            const isDark = localStorage.getItem('theme') !== 'light';
+            if (isDark) { document.documentElement.classList.add('dark'); themeToggle.innerHTML = sunIcon; } 
+            else { themeToggle.innerHTML = moonIcon; }
+            themeToggle.addEventListener('click', () => {
+                const isDarkNow = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+                themeToggle.innerHTML = isDarkNow ? sunIcon : moonIcon;
+            });
+
+            // --- VIEW MANAGEMENT ---
+            function switchView(viewName) {
+                Object.values(views).forEach(v => v.classList.add('hidden'));
+                views[viewName].classList.remove('hidden');
+                localStorage.setItem('activeView', viewName);
                 
-                // 2. Append new event.
-                currentData.events.push(payload);
-
-                // 3. PUT the updated data back.
-                const putResponse = await fetch(JSONBIN_URL, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': JSONBIN_API_KEY,
-                    },
-                    body: JSON.stringify(currentData),
-                });
-
-                if (!putResponse.ok) {
-                    // If PUT fails, maybe the bin was deleted. Try POSTing to create it.
-                    console.warn('JSONBin PUT failed, trying to POST a new bin.');
-                    const postResponse = await fetch('https://api.jsonbin.io/v3/b', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Master-Key': JSONBIN_API_KEY,
-                            'X-Bin-Name': 'standbot-analytics',
-                            'X-Collection-Id': 'YOUR_COLLECTION_ID' // Optional: Organize bins
-                        },
-                        body: JSON.stringify({ events: [payload] }),
-                    });
-                     if (!postResponse.ok) {
-                        console.error('JSONBin: Failed to create new bin after PUT failure.');
-                    }
-                }
-            } catch (error) {
-                console.warn('JSONBin logging failed:', error);
+                const isTracker = viewName === 'linkTracker';
+                navElements.standBot.forEach(el => el.style.display = isTracker ? 'none' : 'block');
+                navElements.userDisplay.classList.toggle('hidden', !isTracker || !currentUserId);
+                navElements.logoutButton.classList.toggle('hidden', !isTracker || !currentUserId);
             }
-        }
 
-        // --- Attach Event Listeners ---
-        // Log page visit on load
-        logEvent('visit');
+            // --- API HELPERS ---
+            async function fetchData(config) {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${config.BIN_ID}/latest`, { headers: { 'X-Master-Key': config.API_KEY } });
+                if (!res.ok) throw new Error('Could not fetch data.');
+                return (await res.json()).record || {};
+            }
 
-        // Log clicks on primary CTAs
-        document.getElementById('ctaStart')?.addEventListener('click', () => logEvent('click_start'));
-        document.getElementById('ctaGroup')?.addEventListener('click', () => logEvent('click_add_group'));
-        document.getElementById('ctaUpgrade')?.addEventListener('click', () => logEvent('click_upgrade'));
-        document.getElementById('ctaShare')?.addEventListener('click', () => logEvent('click_share'));
-    })();
-  </script>
+            async function updateData(config, newData) {
+                await fetch(`https://api.jsonbin.io/v3/b/${config.BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': config.API_KEY },
+                    body: JSON.stringify(newData)
+                });
+            }
+
+            // --- STAND BOT ANALYTICS ---
+            async function logStandBotEvent(event) {
+                if (!STAND_BOT_CONFIG.BIN_ID.startsWith('YOUR')) {
+                    try {
+                        const data = await fetchData(STAND_BOT_CONFIG);
+                        if (!data.events) data.events = [];
+                        data.events.push({ ts: new Date().toISOString(), event, ua: navigator.userAgent });
+                        await updateData(STAND_BOT_CONFIG, data);
+                    } catch (e) { console.warn('StandBot logging failed:', e); }
+                }
+            }
+            document.getElementById('ctaStart').addEventListener('click', () => logStandBotEvent('click_start'));
+            document.getElementById('ctaGroup').addEventListener('click', () => logStandBotEvent('click_add_group'));
+            document.getElementById('ctaPremium').addEventListener('click', () => logStandBotEvent('click_premium_support'));
+            logStandBotEvent('visit');
+
+            // --- LINK TRACKER LOGIC ---
+            function showSpinner(show) { spinner.classList.toggle('hidden', !show); }
+
+            async function login(userId) {
+                showSpinner(true);
+                loginElements.error.textContent = '';
+                try {
+                    localStorage.setItem('loggedInUserId', userId);
+                    currentUserId = userId;
+                    await refreshDashboard();
+                } catch (e) {
+                    loginElements.error.textContent = `Error: ${e.message}`;
+                } finally {
+                    showSpinner(false);
+                }
+            }
+            
+            async function refreshDashboard() {
+                 if (!currentUserId) return;
+                 showSpinner(true);
+                 try {
+                    const allData = await fetchData(LINK_TRACKER_CONFIG);
+                    displayDashboard(currentUserId, allData);
+                 } catch(e) {
+                    alert('Could not refresh data. Please try again.');
+                 } finally {
+                    showSpinner(false);
+                 }
+            }
+
+            function displayDashboard(userId, allData) {
+                navElements.userDisplay.textContent = `User: ${userId}`;
+                navElements.userDisplay.classList.remove('hidden');
+                navElements.logoutButton.classList.remove('hidden');
+                loginElements.section.classList.add('hidden');
+                dashboardElements.section.classList.remove('hidden');
+
+                const userLinks = Object.entries(allData).filter(([_, v]) => v && v.owner_id === userId).map(([k, v]) => ({ short_code: k, ...v }));
+                renderStats(userLinks);
+                renderChart(userLinks);
+                renderTable(userLinks);
+            }
+
+            function renderStats(links) {
+                document.getElementById('total-links').textContent = links.length;
+                document.getElementById('total-clicks').textContent = links.reduce((s, l) => s + (l.clicks || 0), 0);
+            }
+            
+            function renderChart(links) {
+                const sorted = [...links].sort((a, b) => (b.clicks || 0) - (a.clicks || 0)).slice(0, 5);
+                const ctx = document.getElementById('clicks-chart').getContext('2d');
+                if(clicksChart) clicksChart.destroy();
+                clicksChart = new Chart(ctx, { type: 'bar', data: { labels: sorted.map(l => l.short_code), datasets: [{ label: 'Clicks', data: sorted.map(l => l.clicks || 0), backgroundColor: 'rgba(99, 102, 241, 0.6)' }] }, options: { indexAxis: 'y' } });
+            }
+
+            function renderTable(links) {
+                const tableBody = document.getElementById('links-table-body');
+                tableBody.innerHTML = links.length === 0 ? `<tr><td colspan="4" class="text-center py-8 text-slate-500">No links created yet.</td></tr>` : links.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).map(link => {
+                    const shortUrl = `${LINK_TRACKER_CONFIG.DOMAIN}${link.short_code}`;
+                    return `<tr><td class="px-6 py-4"><div class="flex items-center gap-2"><a href="${shortUrl}" target="_blank" class="text-indigo-500 font-medium">${shortUrl}</a><button class="copy-btn p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700" data-link="${shortUrl}">${moonIcon.replace('w-6 h-6', 'w-4 h-4')}</button></div></td><td class="px-6 py-4 max-w-xs truncate">${link.original_link}</td><td class="px-6 py-4 font-semibold">${link.clicks || 0}</td><td class="px-6 py-4 text-sm">${new Date(link.created_at).toLocaleDateString()}</td></tr>`;
+                }).join('');
+            }
+            
+            async function createNewLink() {
+                const originalLink = dashboardElements.originalLinkInput.value.trim();
+                if (!originalLink || !currentUserId) return alert('Please enter a valid URL.');
+                showSpinner(true);
+                try {
+                    const allData = await fetchData(LINK_TRACKER_CONFIG);
+                    const shortCode = Math.random().toString(36).substring(2, 8);
+                    allData[shortCode] = { original_link: originalLink, owner_id: currentUserId, created_at: new Date().toISOString(), clicks: 0 };
+                    await updateData(LINK_TRACKER_CONFIG, allData);
+                    dashboardElements.originalLinkInput.value = '';
+                    dashboardElements.newShortLinkInput.value = `${LINK_TRACKER_CONFIG.DOMAIN}${shortCode}`;
+                    dashboardElements.newLinkDisplay.classList.remove('hidden');
+                    await refreshDashboard();
+                } catch(e) { alert(`Error: ${e.message}`); } 
+                finally { showSpinner(false); }
+            }
+            
+            function logout() {
+                localStorage.removeItem('loggedInUserId');
+                currentUserId = null;
+                dashboardElements.section.classList.add('hidden');
+                loginElements.section.classList.remove('hidden');
+                navElements.userDisplay.classList.add('hidden');
+                navElements.logoutButton.classList.add('hidden');
+                loginElements.userIdInput.value = '';
+            }
+
+            // --- EVENT LISTENERS ---
+            viewButtons.home.addEventListener('click', () => switchView('standBot'));
+            viewButtons.tracker.addEventListener('click', () => switchView('linkTracker'));
+            viewButtons.trackerCard.addEventListener('click', () => switchView('linkTracker'));
+            loginElements.button.addEventListener('click', () => {
+                const userId = loginElements.userIdInput.value.trim();
+                if (userId) login(userId);
+            });
+            dashboardElements.createButton.addEventListener('click', createNewLink);
+            navElements.logoutButton.addEventListener('click', logout);
+            document.getElementById('links-table-body').addEventListener('click', (e) => {
+                const button = e.target.closest('.copy-btn');
+                if (button) navigator.clipboard.writeText(button.dataset.link);
+            });
+
+            // --- INITIALIZATION ---
+            const savedView = localStorage.getItem('activeView') || 'standBot';
+            const savedUserId = localStorage.getItem('loggedInUserId');
+            switchView(savedView);
+            if (savedView === 'linkTracker' && savedUserId) {
+                loginElements.userIdInput.value = savedUserId;
+                login(savedUserId);
+            }
+        });
+    </script>
 </body>
 </html>
